@@ -1,0 +1,29 @@
+$spacing-types: ('p': 'padding', 'm': 'margin');
+$spacing-dirs: ('t': 'top', 'r': 'right', 'b': 'bottom', 'l': 'left');
+
+@for $level from 0 through 16 {
+    $levelvar: $level * 0.125rem;
+    // padding/margin
+    @each $type, $typeword in $spacing-types {
+        @each $dir, $dirword in $spacing-dirs {
+            .#{$type}#{$dir}#{$level} {
+                #{$typeword}-#{$dirword}: $levelvar;
+            }
+        }
+        .#{$type}#{$level} {
+            #{$typeword}: $levelvar;
+        }
+        .#{$type}x#{$level} {
+            #{$typeword}-left: $levelvar;
+            #{$typeword}-right: $levelvar;
+        }
+        .#{$type}y#{$level} {
+            #{$typeword}-top: $levelvar;
+            #{$typeword}-bottom: $levelvar;
+        }
+    }
+
+    // space between
+    .spacex#{$level} > * ~ * { margin-left: $levelvar; }
+    .spacey#{$level} > * ~ * { margin-top: $levelvar; }
+}
