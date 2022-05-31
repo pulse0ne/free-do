@@ -1,17 +1,29 @@
 <template>
-  <div class="side-nav-link px8 py4">
+  <div class="side-nav-link px8 py4" :class="activeClass">
     <slot></slot>
   </div>
 </template>
+
+<script>
+export default {
+  props: ['isActive'],
+  computed: {
+    activeClass () {
+      return { 'router-link-active': this.isActive };
+    }
+  }
+};
+</script>
 
 <style lang="scss" scoped>
 .side-nav-link {
   color: unset;
   text-decoration: none;
+  border-radius: 0.15em;
 
-  .router-link-active,
+  &.router-link-active,
   &:hover {
-    background-color: #efefef;
+    background-color: #eaeaea;
   }
 }
 </style>

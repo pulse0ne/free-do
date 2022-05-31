@@ -2,14 +2,14 @@
   <div class="full-height col">
     <div id="top-nav"></div>
     <div class="row flex-grow">
-      <div id="side-nav" class="col p8">
-        <router-link to="/" custom v-slot="{ navigate }">
-          <side-nav-link @click="navigate">
+      <div id="side-nav" class="col p8 spacey2">
+        <router-link to="/" custom v-slot="{ navigate, isActive }">
+          <side-nav-link @click="navigate" :isActive="isActive">
             Home
           </side-nav-link>
         </router-link>
-        <router-link to="/today" custom v-slot="{ navigate }">
-          <side-nav-link @click="navigate">
+        <router-link to="/today" custom v-slot="{ navigate, isActive }">
+          <side-nav-link @click="navigate" :isActive="isActive">
             Today
           </side-nav-link>
         </router-link>
