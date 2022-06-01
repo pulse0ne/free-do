@@ -1,10 +1,10 @@
 <template>
-  <i class="tydo-icon" :class="className"></i>
+  <i class="freedo-icon" :class="className"></i>
 </template>
 
 <script>
 export default {
-  name: 'Icon',
+  name: 'FreedoIcon',
   props: ['icon'],
   computed: {
     className () {
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-.tydo-icon {
+.freedo-icon {
   cursor: default;
 }
 </style>

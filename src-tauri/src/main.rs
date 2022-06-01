@@ -52,14 +52,17 @@ struct TodoData {
 }
 
 #[tauri::command]
-async fn get_data() -> Result<Vec<TodoItem>, String> {
-  let file = match File::open("/Users/tyler.snedigar/repos/tydo/test-data.json") {
+async fn get_data() -> Result<TodoData, String> {
+  let base_dirs = BaseDirs::new().unwrap();
+  let data_dir = base_dirs.data_local_dir();
+  let data_file = data_dir.join("free-do").join("data.json");
+  let file = match File::open(data_file) {
     Ok(f) => f,
     Err(e) => return Err(e.to_string())
   };
   let reader = BufReader::new(file);
   match serde_json::from_reader(reader) {
-    Ok(t) => return t,
+    Ok(t) => return Ok(t),
     Err(e) => return Err(e.to_string())
   }
 }

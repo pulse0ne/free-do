@@ -2,18 +2,7 @@
   <div class="full-height col">
     <div id="top-nav"></div>
     <div class="row flex-grow">
-      <div id="side-nav" class="col p8 spacey2">
-        <router-link to="/" custom v-slot="{ navigate, isActive }">
-          <side-nav-link @click="navigate" :isActive="isActive">
-            Home
-          </side-nav-link>
-        </router-link>
-        <router-link to="/today" custom v-slot="{ navigate, isActive }">
-          <side-nav-link @click="navigate" :isActive="isActive">
-            Today
-          </side-nav-link>
-        </router-link>
-      </div>
+      <side-nav></side-nav>
       <div id="content" class="px16 py8">
         <router-view />
       </div>
@@ -22,12 +11,17 @@
 </template>
 
 <script>
-import SideNavLink from './components/SideNavLink.vue';
+import { mapActions } from 'vuex';
+import SideNav from './components/SideNav.vue';
 
 export default {
   name: 'App',
-  components: {
-    SideNavLink
+  components: { SideNav },
+  mounted() {
+    this.getTodoData();
+  },
+  methods: {
+    ...mapActions(['getTodoData'])
   }
 };
 </script>
@@ -37,10 +31,5 @@ export default {
 
 #app {
   height: 100%;
-}
-
-#side-nav {
-  min-width: 100px;
-  background-color: #f9f9f9;
 }
 </style>

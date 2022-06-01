@@ -17,6 +17,7 @@ export default {
 
 <style lang="scss" scoped>
 .side-nav-link {
+  cursor: default;
   color: unset;
   text-decoration: none;
   border-radius: 0.15em;
