@@ -9,50 +9,11 @@ use std::io::Error;
 use std::path::PathBuf;
 
 use directories::BaseDirs;
-use serde::Serialize;
-use serde::Deserialize;
 
-#[derive(Debug, Serialize, Deserialize)]
-enum TodoItemPriority {
-  P1, P2, P3, P4
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct TodoItem {
-  id: String,
-  
-  // display metadata
-  title: String,
-  description: Option<String>,
-  priority: TodoItemPriority,
-
-  // grouping metadata
-  group_id: Option<String>,
-
-  // time related attributes
-  completed_at: Option<u64>,
-  created_at: u64,
-  due_at: Option<u64>,
-  remind_at: Option<u64>,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct TodoGroup {
-  id: String,
-  
-  // display metadata
-  name: String,
-  color: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct TodoData {
-  items: Vec<TodoItem>,
-  groups: Vec<TodoGroup>,
-}
+mod models;
 
 #[tauri::command]
-async fn get_data() -> Result<TodoData, String> {
+async fn get_data() -> Result<models::TodoData, String> {
   let base_dirs = BaseDirs::new().unwrap();
   let data_dir = base_dirs.data_local_dir();
   let data_file = data_dir.join("free-do").join("data.json");
@@ -68,7 +29,7 @@ async fn get_data() -> Result<TodoData, String> {
 }
 
 #[tauri::command]
-async fn save_data(data: TodoData) -> Result<(), String> {
+async fn save_data(data: models::TodoData) -> Result<(), String> {
   let base_dirs = BaseDirs::new().unwrap();
   let data_dir = base_dirs.data_local_dir();
   let data_file = data_dir.join("free-do").join("data.json");
@@ -78,7 +39,7 @@ async fn save_data(data: TodoData) -> Result<(), String> {
   }
 }
 
-fn save_data_to_file(path: PathBuf, data: TodoData) -> Result<(), Error> {
+fn save_data_to_file(path: PathBuf, data: models::TodoData) -> Result<(), Error> {
   let file = File::create(path).expect("failed to open data file");
   serde_json::to_writer(file, &data)?;
   Ok(())
@@ -93,7 +54,12 @@ fn ensure_save_file() -> Result<(), Error> {
 
   let data_file = data_dir.join("free-do").join("data.json");
   if !data_file.exists() {
-    let todo_data = TodoData{ items: vec![], groups: vec![] };
+    let default_group = models::TodoGroup{
+      id: String::from("0"),
+      name: String::from("Inbox"),
+      color: String::from("dodgerblue")
+    };
+    let todo_data = models::TodoData{ items: vec![], groups: vec![default_group] };
     save_data_to_file(data_file, todo_data)?;
   }
 

@@ -1,41 +1,55 @@
-[
-  {
-    "id": "1",
-    "title": "Test Item 1",
-    "description": "Description of item 1",
-    "priority": "P4",
-    "created_at": 1
-  },
-  {
-    "id": "2",
-    "title": "Test Item 2",
-    "description": "Description of item 2",
-    "created_at": 2
-  },
-  {
-    "id": "3",
-    "title": "Test Item 3",
-    "description": "Description of item 3",
-    "created_at": 3
-  },
-  {
-    "id": "4",
-    "title": "Test Item 4",
-    "description": "Description of item 4",
-    "created_at": 4
-  },
-  {
-    "id": "5",
-    "title": "Test Item 5",
-    "description": "Description of item 5",
-    "created_at": 1,
-    "completed_at": 1
-  },
-  {
-    "id": "6",
-    "title": "Test Item 6",
-    "description": "Description of item 6",
-    "created_at": 1,
-    "completed_at": 2
-  }
-]
+{
+  "items": [
+    {
+      "id": "1",
+      "title": "Test Item 1",
+      "description": "Description of item 1",
+      "priority": 4,
+      "createdAt": 1
+    },
+    {
+      "id": "2",
+      "title": "Test Item 2",
+      "description": "Description of item 2",
+      "priority": 0,
+      "createdAt": 2
+    },
+    {
+      "id": "3",
+      "title": "Test Item 3",
+      "description": "Description of item 3",
+      "priority": 0,
+      "createdAt": 3
+    },
+    {
+      "id": "4",
+      "title": "Test Item 4",
+      "description": "Description of item 4",
+      "priority": 0,
+      "createdAt": 4
+    },
+    {
+      "id": "5",
+      "title": "Test Item 5",
+      "description": "Description of item 5",
+      "priority": 0,
+      "createdAt": 1,
+      "completedAt": 1
+    },
+    {
+      "id": "6",
+      "title": "Test Item 6",
+      "description": "Description of item 6",
+      "priority": 0,
+      "createdAt": 1,
+      "completedAt": 2
+    }
+  ],
+  "groups": [
+    {
+      "id": "0",
+      "name": "Inbox",
+      "color": "dodgerblue"
+    }  
+  ]
+}

@@ -1,12 +1,14 @@
 import { createStore } from 'vuex';
 import { invoke } from '@tauri-apps/api/tauri';
+import moment from 'moment';
 
 const getData = () => invoke('get_data');
 // const saveData = () => invoke('save_data');
 
 export default createStore({
   state: {
-    todoData: {}
+    todoData: {},
+    now: moment()
   },
   getters: {
     // sortedTodos (state) {
@@ -23,13 +25,26 @@ export default createStore({
     // },
     todoGroups (state) {
       return state.todoData.groups;
+    },
+    allTodos (state) {
+      return state.todoData.items;
+    },
+    todayTodos (state) {
+      const now = state.now.clone();
+      const [ startOfDay, endOfDay ] = [ now.startOf('day'), now.endOf('day') ];
+      return state.todoData.items.filter(i => moment(i).isBetween(startOfDay, endOfDay));
+    },
+    upcomingTodos (state) {
+      const today = state.now.clone().startOf('day');
+      const twoWeeksFromNow = today.clone().add(14, 'days');
+      return state.todoData.items.filter(i => moment(i).isBetween(today, twoWeeksFromNow));
+    },
+    overdueTodos (state) {
+      const today = state.now.clone().startOf('day');
+      return state.todoData.items.filter(i => moment(i).isBefore(today) && !i.completed_at);
     }
   },
   mutations: {
-    // setTodos (state, todos) {
-    //   console.log(todos);
-    //   state.todos = todos;
-    // },
     // completeTodo (state, todo) {
     //   const t = state.todos.find(t => t.id === todo.id);
     //   t.completed_at = Date.now();
@@ -42,6 +57,10 @@ export default createStore({
     //   const ix = state.todos.findIndex(t => t.id === todo.id);
     //   state.todos[ix] = todo;
     // }
+    updateTime (state) {
+      console.log('updating time');
+      state.now = moment();
+    },
     setTodoData (state, todoData) {
       console.log(todoData);
       state.todoData = todoData;

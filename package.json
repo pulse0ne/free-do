@@ -12,6 +12,7 @@
   "dependencies": {
     "@tauri-apps/api": "^1.0.0-rc.5",
     "core-js": "^3.8.3",
+    "moment": "^2.29.3",
     "vue": "^3.2.13",
     "vue-router": "4",
     "vuex": "^4.0.0"

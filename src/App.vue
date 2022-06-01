@@ -11,16 +11,24 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import SideNav from './components/SideNav.vue';
+
+let timerId;
 
 export default {
   name: 'App',
   components: { SideNav },
   mounted() {
     this.getTodoData();
+    this.updateTime();
+    timerId = setInterval(this.updateTime, 5 * 60 * 1000);
+  },
+  unmounted() {
+    clearInterval(timerId);
   },
   methods: {
+    ...mapMutations(['updateTime']),
     ...mapActions(['getTodoData'])
   }
 };
