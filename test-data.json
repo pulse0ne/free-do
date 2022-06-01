@@ -5,7 +5,8 @@
       "title": "Test Item 1",
       "description": "Description of item 1",
       "priority": 4,
-      "createdAt": 1
+      "createdAt": 1,
+      "dueAt": 4000
     },
     {
       "id": "2",

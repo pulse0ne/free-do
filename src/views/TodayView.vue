@@ -1,6 +1,6 @@
 <template>
   <div>
-    Today
+    <h1>Today</h1>
   </div>
 </template>
 

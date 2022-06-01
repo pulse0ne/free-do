@@ -20,10 +20,16 @@
         Test Group
       </side-nav-link>
     </router-link>
+    <router-link v-for="group in todoGroups" :key="group.id" :to="'/group/' + group.id" custom v-slot="{ navigate, isActive }">
+      <side-nav-link @click="navigate" :isActive="isActive">
+        {{ group.name }}
+      </side-nav-link>
+    </router-link>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import FreedoIcon from './FreedoIcon.vue';
 import SideNavLink from './SideNavLink.vue';
 
@@ -31,6 +37,9 @@ export default {
   components: {
     FreedoIcon,
     SideNavLink
+  },
+  computed: {
+    ...mapGetters(['todoGroups'])
   }
 };
 </script>

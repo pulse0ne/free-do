@@ -3,7 +3,7 @@
     <div id="top-nav"></div>
     <div class="row flex-grow">
       <side-nav></side-nav>
-      <div id="content" class="px16 py8">
+      <div id="content" class="flex-grow px16 py8">
         <router-view />
       </div>
     </div>

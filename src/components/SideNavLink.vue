@@ -20,7 +20,7 @@ export default {
   cursor: default;
   color: unset;
   text-decoration: none;
-  border-radius: 0.15em;
+  border-radius: 0.25rem;
 
   &.router-link-active,
   &:hover {

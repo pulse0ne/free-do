@@ -7,7 +7,10 @@ const getData = () => invoke('get_data');
 
 export default createStore({
   state: {
-    todoData: {},
+    todoData: {
+      groups: [],
+      items: []
+    },
     now: moment()
   },
   getters: {
@@ -29,19 +32,22 @@ export default createStore({
     allTodos (state) {
       return state.todoData.items;
     },
-    todayTodos (state) {
-      const now = state.now.clone();
-      const [ startOfDay, endOfDay ] = [ now.startOf('day'), now.endOf('day') ];
-      return state.todoData.items.filter(i => moment(i).isBetween(startOfDay, endOfDay));
+    todosWithDueDates (state) {
+      return state.todoData.items.filter(i => i.dueAt);
     },
-    upcomingTodos (state) {
+    todayTodos (state, getters) {
+      const now = state.now.clone();
+      const [ startOfDay, endOfDay ] = [ now.clone().startOf('day'), now.endOf('day') ];
+      return getters.todosWithDueDates.filter(i => moment(i.dueAt).isBetween(startOfDay, endOfDay));
+    },
+    upcomingTodos (state, getters) {
       const today = state.now.clone().startOf('day');
       const twoWeeksFromNow = today.clone().add(14, 'days');
-      return state.todoData.items.filter(i => moment(i).isBetween(today, twoWeeksFromNow));
+      return getters.todosWithDueDates.filter(i => moment(i.dueAt).isBetween(today, twoWeeksFromNow));
     },
-    overdueTodos (state) {
+    overdueTodos (state, getters) {
       const today = state.now.clone().startOf('day');
-      return state.todoData.items.filter(i => moment(i).isBefore(today) && !i.completed_at);
+      return getters.todosWithDueDates.filter(i => !i.completedAt && moment(i.dueAt).isBefore(today));
     }
   },
   mutations: {
